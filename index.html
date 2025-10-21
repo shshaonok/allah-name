@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আল্লাহর ৯৯টি নাম (আসমাউল হুসনা)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- বেসিক স্টাইল --- */
+        body {
+            font-family: 'Noto Sans Bengali', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            direction: ltr;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        h1 {
+            color: #00684a;
+            margin-bottom: 25px;
+            font-size: 2rem;
+        }
+
+        /* --- স্লাইডার সেকশন --- */
+        #sliderSection {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 30px;
+            background: #fafafa;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        #nameDisplay {
+            margin-bottom: 25px;
+        }
+        
+        #nameNumber {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00796b;
+            margin-bottom: 10px;
+        }
+
+        #nameArabic {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 3.5rem; /* বড় আরবি ফন্ট */
+            font-weight: 700;
+            color: #005c45;
+            margin: 10px 0;
+        }
+
+        #nameBangla {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #222;
+        }
+
+        #nameMeaning {
+            font-size: 1.3rem;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        .slider-nav {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .slider-nav button {
+            background-color: #00796b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Noto Sans Bengali', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .slider-nav button:hover {
+            background-color: #005c45;
+        }
+        
+        .slider-nav button:disabled {
+            background-color: #a0a0a0;
+            cursor: not-allowed;
+        }
+
+        /* --- ভিউ টগল বাটন --- */
+        #toggleViewBtn {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        #toggleViewBtn:hover {
+            background-color: #e67e22;
+        }
+
+        /* --- গ্রিড সেকশন (সবগুলো নাম) --- */
+        #gridSection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .name-card {
+            background: #ffffff;
+            border: 1px solid #e0e7ff;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .name-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 92, 69, 0.1);
+        }
+
+        .name-card .number {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #00796b;
+        }
+
+        .name-card .arabic {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 2.2rem;
+            color: #005c45;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        .name-card .bangla {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .name-card .meaning {
+            font-size: 1rem;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        /* --- স্বাগত বার্তা (মডাল) --- */
+        #welcomeModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        #welcomeModal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+        
+        #welcomeModal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #00684a;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+        }
+
+        #closeModalBtn {
+            background-color: #00796b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        #closeModalBtn:hover {
+            background-color: #005c45;
+        }
+
+        /* --- আয়াত পপআপ --- */
+        #ayahPopup {
+            position: fixed;
+            bottom: -150px; /* প্রথমে পর্দার বাইরে */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            z-index: 1000;
+            transition: bottom 0.7s ease-in-out;
+            text-align: center;
+        }
+
+        #ayahPopup.show {
+            bottom: 0; /* প্রদর্শনের সময় উপরে উঠে আসবে */
+        }
+
+        #ayahText {
+            font-size: 1.1rem;
+            margin: 0;
+            margin-bottom: 8px;
+        }
+
+        #ayahRef {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcomeModal">
+        <div class="modal-content">
+            <h2>আসসালামু আলাইকুম</h2>
+            <p>আল্লাহর গুণবাচক নামসমূহের এই ওয়েবসাইটে আপনাকে স্বাগতম।</p>
+            <button id="closeModalBtn">প্রবেশ করুন</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>আল্লাহর ৯৯টি গুণবাচক নাম</h1>
+
+        <div id="sliderSection">
+            <div id="nameDisplay">
+                <div id="nameNumber">১</div>
+                <div id="nameArabic">ٱلْرَّحْمَـٰنُ</div>
+                <div id="nameBangla">আর-রাহমান</div>
+                <div id="nameMeaning">পরম করুণাময়</div>
+            </div>
+            <div class="slider-nav">
+                <button id="prevBtn">পূর্ববর্তী</button>
+                <button id="nextBtn">পরবর্তী</button>
+            </div>
+        </div>
+
+        <button id="toggleViewBtn">সবগুলো দেখুন</button>
+
+        <div id="gridSection" style="display: none;">
+            </div>
+    </div>
+
+    <div id="ayahPopup">
+        <p id="ayahText">তিনিই আল্লাহ, যিনি ছাড়া কোন ইলাহ নেই। তিনি অদৃশ্য ও দৃশ্যের পরিজ্ঞাতা, তিনি পরম করুণাময়, অসীম দয়ালু।</p>
+        <span id="ayahRef">(সূরা আল-হাশর, ৫৯:২২)</span>
+    </div>
+
+    <script>
+        // --- ১. আল্লাহর ৯৯ নামের সম্পূর্ণ ডেটা ---
+        const namesData = [
+            { arabic: "ٱلْرَّحْمَـٰنُ", bangla: "আর-রাহমান", meaning: "পরম করুণাময়" },
+            { arabic: "ٱلْرَّحِيْمُ", bangla: "আর-রহিম", meaning: "অতি দয়ালু" },
+            { arabic: "ٱلْمَلِكُ", bangla: "আল-মালিক", meaning: "সার্বভৌম অধিপতি" },
+            { arabic: "ٱلْقُدُّوسُ", bangla: "আল-কুদ্দুস", meaning: "পরম পবিত্র" },
+            { arabic: "ٱلْسَّلَامُ", bangla: "আস-সালাম", meaning: "শান্তিদাতা" },
+            { arabic: "ٱلْمُؤْمِنُ", bangla: "আল-মুমিন", meaning: "নিরাপত্তাদাতা" },
+            { arabic: "ٱلْمُهَيْمِنُ", bangla: "আল-মুহাইমিন", meaning: "রক্ষাকর্তা" },
+            { arabic: "ٱلْعَزِيزُ", bangla: "আল-আজিজ", meaning: "পরাক্রমশালী" },
+            { arabic: "ٱلْجَبَّارُ", bangla: "আল-জাব্বার", meaning: "প্রবল" },
+            { arabic: "ٱلْمُتَكَبِّرُ", bangla: "আল-মুতাকাব্বির", meaning: "গৌরবান্বিত" },
+            { arabic: "ٱلْخَالِقُ", bangla: "আল-খালিক", meaning: "সৃষ্টিকর্তা" },
+            { arabic: "ٱلْبَارِئُ", bangla: "আল-বারী", meaning: "উদ্ভাবনকর্তা" },
+            { arabic: "ٱلْمُصَوِّرُ", bangla: "আল-মুসাওবির", meaning: "আকৃতিদানকারী" },
+            { arabic: "ٱلْغَفَّارُ", bangla: "আল-গাফফার", meaning: "অসীম ক্ষমাশীল" },
+            { arabic: "ٱلْقَهَّارُ", bangla: "আল-কাহ্হার", meaning: "মহাপরাক্রমশালী" },
+            { arabic: "ٱلْوَهَّابُ", bangla: "আল-ওয়াহ্হাব", meaning: "মহান দাতা" },
+            { arabic: "ٱلْرَّزَّاقُ", bangla: "আর-রাজ্জাক", meaning: "রিজিকদাতা" },
+            { arabic: "ٱلْفَتَّاحُ", bangla: "আল-ফাত্তাহ", meaning: "মহা বিজয়ী" },
+            { arabic: "ٱلْعَلِيمُ", bangla: "আল-আলীম", meaning: "সর্বজ্ঞ" },
+            { arabic: "ٱلْقَابِضُ", bangla: "আল-কাবিদ", meaning: "সংকোচনকারী" },
+            { arabic: "ٱلْبَاسِطُ", bangla: "আল-বাসিত", meaning: "সম্প্রসারণকারী" },
+            { arabic: "ٱلْخَافِضُ", bangla: "আল-খাফিদ", meaning: "অবনতকারী" },
+            { arabic: "ٱلْرَّافِعُ", bangla: "আর-রাফি", meaning: "উন্নতকারী" },
+            { arabic: "ٱلْمُعِزُّ", bangla: "আল-মুইয", meaning: "সম্মানদাতা" },
+            { arabic: "ٱلْمُذِلُّ", bangla: "আল-মুযিল", meaning: "সম্মানহরণকারী" },
+            { arabic: "ٱلْسَّمِيعُ", bangla: "আস-সামী", meaning: "সর্বশ্রোতা" },
+            { arabic: "ٱلْبَصِيرُ", bangla: "আল-বাসীর", meaning: "সর্বদ্রষ্টা" },
+            { arabic: "ٱلْحَكَمُ", bangla: "আল-হাকাম", meaning: "মহাবিচারক" },
+            { arabic: "ٱلْعَدْلُ", bangla: "আল-আদল", meaning: "ন্যায়পরায়ণ" },
+            { arabic: "ٱلْلَّطِيفُ", bangla: "আল-লাতিফ", meaning: "সূক্ষ্মদর্শী" },
+            { arabic: "ٱلْخَبِيرُ", bangla: "আল-খবীর", meaning: "সর্বজ্ঞ" },
+            { arabic: "ٱلْحَلِيمُ", bangla: "আল-হালীম", meaning: "মহা সহনশীল" },
+            { arabic: "ٱلْعَظِيمُ", bangla: "আল-আযীম", meaning: "অতি মহান" },
+            { arabic: "ٱلْغَفُورُ", bangla: "আল-গফুর", meaning: "পরম ক্ষমাশীল" },
+            { arabic: "ٱلْشَّكُورُ", bangla: "আশ-শাকুর", meaning: "গুণগ্রাহী" },
+            { arabic: "ٱلْعَلِيُّ", bangla: "আল-আলী", meaning: "মহা উন্নত" },
+            { arabic: "ٱلْكَبِيرُ", bangla: "আল-কাবীর", meaning: "সর্বশ্রেষ্ঠ" },
+            { arabic: "ٱلْحَفِيظُ", bangla: "আল-হাফীয", meaning: "মহারক্ষক" },
+            { arabic: "ٱلْمُقِيتُ", bangla: "আল-মুকীত", meaning: "আহার্যদাতা" },
+            { arabic: "ٱلْحَسِيبُ", bangla: "আল-হাসীব", meaning: "হিসাব গ্রহণকারী" },
+            { arabic: "ٱلْجَلِيلُ", bangla: "আল-জালীল", meaning: "মহিমান্বিত" },
+            { arabic: "ٱلْكَرِيمُ", bangla: "আল-কারীম", meaning: "মহা উদার" },
+            { arabic: "ٱلْرَّقِيبُ", bangla: "আর-রকীব", meaning: "তত্ত্বাবধায়ক" },
+            { arabic: "ٱلْمُجِيبُ", bangla: "আল-মুজীব", meaning: "প্রার্থনা গ্রহণকারী" },
+            { arabic: "ٱلْوَاسِعُ", bangla: "আল-ওয়াসি", meaning: "অসীম" },
+            { arabic: "ٱلْحَكِيمُ", bangla: "আল-হাকীম", meaning: "প্রজ্ঞাময়" },
+            { arabic: "ٱلْوَدُودُ", bangla: "আল-ওয়াদুদ", meaning: "প্রেমময়" },
+            { arabic: "ٱلْمَجِيدُ", bangla: "আল-মাজীদ", meaning: "মহান" },
+            { arabic: "ٱلْبَاعِثُ", bangla: "আল-বাইস", meaning: "পুনরুত্থানকারী" },
+            { arabic: "ٱلْشَّهِيدُ", bangla: "আশ-শাহীদ", meaning: "সর্বদর্শী" },
+            { arabic: "ٱلْحَقُّ", bangla: "আল-হাক্ক", meaning: "সত্য" },
+            { arabic: "ٱلْوَكِيلُ", bangla: "আল-ওয়াকীল", meaning: "কর্মবিধায়ক" },
+            { arabic: "ٱلْقَوِيُّ", bangla: "আল-কাবি", meaning: "শক্তিশালী" },
+            { arabic: "ٱلْمَتِينُ", bangla: "আল-মাতীন", meaning: "সুদৃঢ়" },
+            { arabic: "ٱلْوَلِيُّ", bangla: "আল-ওয়ালী", meaning: "বন্ধু" },
+            { arabic: "ٱلْحَمِيدُ", bangla: "আল-হামীদ", meaning: "প্রশংসিত" },
+            { arabic: "ٱلْمُحْصِي", bangla: "আল-মুহসী", meaning: "হিসাব রক্ষক" },
+            { arabic: "ٱلْمُبْدِئُ", bangla: "আল-মুবদি", meaning: "সূচনাকারী" },
+            { arabic: "ٱلْمُعِيدُ", bangla: "আল-মুঈদ", meaning: "পুনঃসৃষ্টিকারী" },
+            { arabic: "ٱلْمُحْيِي", bangla: "আল-মুহয়ী", meaning: "জীবনদাতা" },
+            { arabic: "ٱلْمُمِيتُ", bangla: "আল-মুমীত", meaning: "মৃত্যুদাতা" },
+            { arabic: "ٱلْحَيُّ", bangla: "আল-হাইয়্যু", meaning: "চিরঞ্জীব" },
+            { arabic: "ٱلْقَيُّومُ", bangla: "আল-কাইয়্যুম", meaning: "স্বয়ংস্থিতিশীল" },
+            { arabic: "ٱلْوَاجِدُ", bangla: "আল-ওয়াজিদ", meaning: "অনুভবকারী" },
+            { arabic: "ٱلْمَاجِدُ", bangla: "আল-মাজিদ", meaning: "মহিমান্বিত" },
+            { arabic: "ٱلْوَاحِدُ", bangla: "আল-ওয়াহিদ", meaning: "একক" },
+            { arabic: "ٱلْأَحَد", bangla: "আল-আহাদ", meaning: "এক" },
+            { arabic: "ٱلْصَّمَدُ", bangla: "আস-সমাদ", meaning: "অমুখাপেক্ষী" },
+            { arabic: "ٱلْقَادِرُ", bangla: "আল-কাদির", meaning: "ক্ষমতাবান" },
+            { arabic: "ٱلْمُقْتَدِرُ", bangla: "আল-মুক্তাদির", meaning: "সর্বশক্তিমান" },
+            { arabic: "ٱلْمُقَدِّمُ", bangla: "আল-মুকাদ্দিম", meaning: "অগ্রবর্তীকারী" },
+            { arabic: "ٱلْمُؤَخِّرُ", bangla: "আল-মুআখখির", meaning: "বিলম্বকারী" },
+            { arabic: "ٱلْأَوَّلُ", bangla: "আল-আউয়াল", meaning: "অনাদি" },
+            { arabic: "ٱلْآخِرُ", bangla: "আল-আখির", meaning: "অনন্ত" },
+            { arabic: "ٱلْظَّاهِرُ", bangla: "আয-যাহির", meaning: "প্রকাশ্য" },
+            { arabic: "ٱلْبَاطِنُ", bangla: "আল-বাতিন", meaning: "গুপ্ত" },
+            { arabic: "ٱلْوَالِي", bangla: "আল-ওয়ালী", meaning: "অভিভাবক" },
+            { arabic: "ٱلْمُتَعَالِي", bangla: "আল-মুতাআলী", meaning: "সর্বোচ্চ" },
+            { arabic: "ٱلْبَرُّ", bangla: "আল-বার্", meaning: "সদাচারী" },
+            { arabic: "ٱلْتَّوَّابُ", bangla: "আত-তাওয়াব", meaning: "তওবা কবুলকারী" },
+            { arabic: "ٱلْمُنْتَقِمُ", bangla: "আল-মুনতাকিম", meaning: "প্রতিশোধ গ্রহণকারী" },
+            { arabic: "ٱلْعَفُوُّ", bangla: "আল-আফু", meaning: "ক্ষমাকারী" },
+            { arabic: "ٱلْرَّءُوفُ", bangla: "আর-রউফ", meaning: "পরম স্নেহশীল" },
+            { arabic: "مَالِكُ ٱلْمُلْكِ", bangla: "মালিকুল মুলক", meaning: "সর্বভৌম ক্ষমতার অধিকারী" },
+            { arabic: "ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ", bangla: "যুল জালালি ওয়াল ইকরাম", meaning: "মহিমান্বিত ও মহানুভব" },
+            { arabic: "ٱلْمُقْسِطُ", bangla: "আল-মুকসিত", meaning: "ন্যায়পরায়ণ" },
+            { arabic: "ٱلْجَامِعُ", bangla: "আল-জামি", meaning: "সমবেতকারী" },
+            { arabic: "ٱلْغَنِيُّ", bangla: "আল-গনি", meaning: "অমুখাপেক্ষী" },
+            { arabic: "ٱلْمُغْنِي", bangla: "আল-মুগনী", meaning: "সমৃদ্ধি দানকারী" },
+            { arabic: "ٱلْمَانِعُ", bangla: "আল-মানি", meaning: "প্রতিরোধকারী" },
+            { arabic: "ٱلْضَّارُ", bangla: "আদ-দার", meaning: "ক্ষতিসাধনকারী" },
+            { arabic: "ٱلْنَّافِعُ", bangla: "আন-নাফি", meaning: "কল্যাণকারী" },
+            { arabic: "ٱلْنُّورُ", bangla: "আন-নূর", meaning: "জ্যোতি" },
+            { arabic: "ٱلْهَادِي", bangla: "আল-হাদী", meaning: "পথপ্রদর্শক" },
+            { arabic: "ٱلْبَدِيعُ", bangla: "আল-বাদী", meaning: "অতুলনীয়" },
+            { arabic: "ٱلْبَاقِي", bangla: "আল-বাকী", meaning: "চিরস্থায়ী" },
+            { arabic: "ٱلْوَارِثُ", bangla: "আল-ওয়ারিস", meaning: "উত্তরাধিকারী" },
+            { arabic: "ٱلْرَّشِيدُ", bangla: "আর-রশীদ", meaning: "সৎপথ প্রদর্শনকারী" },
+            { arabic: "ٱلْصَّبُورُ", bangla: "আস-সবুর", meaning: "অসীম ধৈর্যশীল" }
+        ];
+
+        // --- ২. কুরআনের আয়াতের ডেটা ---
+        const ayahsData = [
+            { text: "আল্লাহ কারো উপর তার সাধ্যাতীত কোন কাজের দায়িত্ব চাপিয়ে দেন না।", ref: "(সূরা আল-বাকারা, ২:২৮৬)" },
+            { text: "অতএব, তোমরা আমাকে স্মরণ কর, আমিও তোমাদেরকে স্মরণ করব।", ref: "(সূরা আল-বাকারা, ২:১৫২)" },
+            { text: "এবং অবশ্যই আপনার জন্য রয়েছে অশেষ পুরস্কার।", ref: "(সূরা আল-ক্বালাম, ৬৮:৩)" },
+            { text: "তিনিই আল্লাহ, যিনি ছাড়া কোন ইলাহ নেই। তিনি অদৃশ্য ও দৃশ্যের পরিজ্ঞাতা, তিনি পরম করুণাময়, অসীম দয়ালু।", ref: "(সূরা আল-হাশর, ৫৯:২২)" },
+            { text: "নিশ্চয়ই কষ্টের সাথে স্বস্তি রয়েছে।", ref: "(সূরা আল-ইনশিরাহ, ৯৪:৬)" },
+            { text: "যে ব্যক্তি আল্লাহর উপর ভরসা করে তার জন্য তিনিই যথেষ্ট।", ref: "(সূরা আত-তালাক, ৬৫:৩)" }
+        ];
+
+        // --- ৩. DOM উপাদানগুলো ধরা ---
+        const nameNumber = document.getElementById('nameNumber');
+        const nameArabic = document.getElementById('nameArabic');
+        const nameBangla = document.getElementById('nameBangla');
+        const nameMeaning = document.getElementById('nameMeaning');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        const sliderSection = document.getElementById('sliderSection');
+        const gridSection = document.getElementById('gridSection');
+        const toggleViewBtn = document.getElementById('toggleViewBtn');
+        
+        const welcomeModal = document.getElementById('welcomeModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        const ayahPopup = document.getElementById('ayahPopup');
+        const ayahText = document.getElementById('ayahText');
+        const ayahRef = document.getElementById('ayahRef');
+
+        let currentIndex = 0;
+        let isGridView = false;
+        let ayahInterval; // আয়াত পপআপের জন্য ইন্টারভ্যাল ভেরিয়েবল
+
+        // --- ৪. স্বাগত বার্তা (মডাল) ফাংশন ---
+        window.onload = () => {
+            setTimeout(() => { // সামান্য দেরি করে দেখানো হলো
+                welcomeModal.classList.add('show');
+            }, 500);
+        };
+
+        closeModalBtn.onclick = () => {
+            welcomeModal.classList.remove('show');
+            // মডাল বন্ধ হওয়ার পর আয়াত পপআপ শুরু হবে
+            setTimeout(startAyahPopup, 2000); 
+        };
+
+        // --- ৫. স্লাইডার ফাংশন ---
+        function showName(index) {
+            if (namesData.length === 0) return; // ডেটা না থাকলে কিছু করবে না
+            const name = namesData[index];
+            nameNumber.innerText = `${index + 1}`;
+            nameArabic.innerText = name.arabic;
+            nameBangla.innerText = name.bangla;
+            nameMeaning.innerText = name.meaning;
+            
+            // বাটন নিষ্ক্রিয়/সক্রিয় করা
+            prevBtn.disabled = (index === 0);
+            nextBtn.disabled = (index === namesData.length - 1);
+        }
+
+        prevBtn.onclick = () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showName(currentIndex);
+            }
+        };
+
+        nextBtn.onclick = () => {
+            if (currentIndex < namesData.length - 1) {
+                currentIndex++;
+                showName(currentIndex);
+            }
+        };
+
+        // --- ৬. গ্রিড তৈরি (সবগুলো দেখুন) ---
+        function populateGrid() {
+            gridSection.innerHTML = ''; // প্রতিবার ক্লিয়ার করা
+            namesData.forEach((name, index) => {
+                const card = document.createElement('div');
+                card.className = 'name-card';
+                card.innerHTML = `
+                    <div class="number">${index + 1}</div>
+                    <div class="arabic">${name.arabic}</div>
+                    <div class="bangla">${name.bangla}</div>
+                    <div class="meaning">${name.meaning}</div>
+                `;
+                gridSection.appendChild(card);
+            });
+        }
+
+        // --- ৭. ভিউ টগল (স্লাইডার / গ্রিড) ---
+        toggleViewBtn.onclick = () => {
+            isGridView = !isGridView;
+            if (isGridView) {
+                // গ্রিড দেখাও
+                sliderSection.style.display = 'none';
+                gridSection.style.display = 'grid';
+                populateGrid(); // গ্রিড তৈরি করো
+                toggleViewBtn.innerText = 'স্লাইডার ভিউতে ফিরুন';
+            } else {
+                // স্লাইডার দেখাও
+                sliderSection.style.display = 'flex';
+                gridSection.style.display = 'none';
+                toggleViewBtn.innerText = 'সবগুলো একসাথে দেখুন';
+                showName(currentIndex); // বর্তমান নামের স্লাইড দেখাও
+            }
+        };
+
+        // --- ৮. আয়াত পপআপ ফাংশন ---
+        function showRandomAyah() {
+            // একটি র্যান্ডম আয়াত নির্বাচন
+            const randomAyah = ayahsData[Math.floor(Math.random() * ayahsData.length)];
+            
+            // টেক্সট সেট করা
+            ayahText.innerText = randomAyah.text;
+            ayahRef.innerText = randomAyah.ref;
+
+            // পপআপ দেখানো
+            ayahPopup.classList.add('show');
+
+            // নির্দিষ্ট সময় পর হাইড করা (যেমন ৭ সেকেন্ড)
+            setTimeout(() => {
+                ayahPopup.classList.remove('show');
+            }, 7000);
+        }
+
+        // নির্দিষ্ট সময় পর পর পপআপ দেখানোর ফাংশন চালু করা
+        function startAyahPopup() {
+            if (ayahInterval) {
+                clearInterval(ayahInterval); // পুরনো ইন্টারভ্যাল ক্লিয়ার করা
+            }
+            showRandomAyah(); // প্রথমে একবার দেখাবে
+            ayahInterval = setInterval(showRandomAyah, 12000); // প্রতি ১২ সেকেন্ড পর পর
+        }
+
+        // --- ৯. প্রাথমিক লোড ---
+        showName(currentIndex); // প্রথম নামটি লোড করা
+        
+    </script>
+</body>
+</html>
